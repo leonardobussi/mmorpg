@@ -16,8 +16,12 @@ module.exports.cadastrar = function (application, req, res){
         res.render('cadastro', {validacao: erros, dadosForm: dadosForm});
         return;
     }
-    else{
-        res.send("pronto")
-        return;
-    }
+
+    const cone = application.config.dbConnection;
+    const UsuariosDAO = new application.app.models.UsuariosDAO(cone)
+
+    UsuariosDAO.inserirUsuario(dadosForm)
+    res.send("pronto")
+    return;
+    
 }
