@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "author": "leo bussi",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "express": "^4.14.0",
     "express-validator": "^2.20.8",
     "mongodb": "^2.2.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
