@@ -1,23 +1,21 @@
-const mongo = require('mongodb')
+/* importar o mongodb */
+var mongo = require('mongodb');
 
-const connMongoDB = function(){
-    console.log("entrou na funcao de conexao")
-    const db = new mongo.Db(
+var connMongoDB = function(){
+    console.log('Entrou na função de conexão');
+    var db = new mongo.Db(
         'got',
         new mongo.Server(
-            'localhost',
-            27017,
+            'localhost', // string contendo o endereço do servidor
+            27017, // porta de conexão
             {}
         ),
         {}
-    )
+    );
 
-    return db; 
-
-}   
-
-
+    return db;
+}
 
 module.exports = function(){
-   return connMongoDB
+    return connMongoDB;
 }
