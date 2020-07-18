@@ -3,16 +3,21 @@ module.exports.index = function(application, req, res){
 }
 
 module.exports.autenticar = function(application, req, res){
-	const dadosForm = req.body
+	var dadosForm = req.body
 
 	req.assert("usuario", "Usuario não pode ser vazio!").notEmpty()
 	req.assert("senha", "Senha não pode ser vazio!").notEmpty()
 
-	const erros = req.validationErrors()
+	var erros = req.validationErrors()
 
 	if(erros){
 		return res.render('index', {validacao: erros})
 	}
 
-	return res.send("deu certo")
+	var connection = application.config.dbConnection
+	var UsuariosDAO = new application.app.models.UsuariosDAO(connection)
+
+	UsuariosDAO.autenticar(dadosForm, req, res)
+
+	//return res.send("deu certo")
 }
