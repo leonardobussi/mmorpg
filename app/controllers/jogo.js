@@ -23,3 +23,11 @@ module.exports.sair = function(application, req, res){
 		res.redirect('/')
 	})
 }
+
+module.exports.suditos = function(application, req, res){
+	res.render("aldeoes")
+}
+
+module.exports.pergaminhos = function(application, req, res){
+	res.render("pergaminhos")
+}
