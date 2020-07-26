@@ -1,7 +1,7 @@
 /* importar o mongodb */
 var mongo = require('mongodb');
 
-var connMongoDB = function(){
+var connMongoDB = function(){ // falta conectar com o banco remoto
 	console.log('Entrou na função de conexão');
 	var db = new mongo.Db(
 		'goteira',
