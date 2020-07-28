@@ -16,32 +16,57 @@
 
 		<script>
 			$(document).ready( function(){
+
 				$('#btn_sair').click(function(){
-					window.location.href = '/sair'
-				})
+					window.location.href = '/sair';
+				});
 
 				$('#btn_suditos').click(function(){
-					$('#msg').hide()
+					$('#msg').hide();
+
 					$.ajax({
 						url: '/suditos',
 						method: "get",
 						success: function(data){
-							$('#acoes').html(data)
+							$('#acoes').html(data);
 						}
-					})
-				})
-				$('#btn_pergaminhos').click(function(){
-					$('#msg').hide()
+					});
+				});
+
+				$('#btn_pergaminho').click(function(){
+					$('#msg').hide();
+					
 					$.ajax({
 						url: '/pergaminhos',
 						method: "get",
 						success: function(data){
-							$('#acoes').html(data)
-						}
-					})
-				})
+							$('#acoes').html(data);
 
-			} )
+							clearTimeout(timerId);
+							cronometro();
+						}
+					});
+				});
+
+			});
+
+			var timerId = null;
+
+			function cronometro(){
+				
+				$('.tempo_restante').each(function(){
+					var segundos = $(this).html();
+					var segundos_atuais = parseInt(segundos) - 1;
+
+					if(segundos_atuais < 0){
+						window.location.href= "/jogo?msg=C";
+					} else {
+						$(this).html(segundos_atuais);
+					}
+				});
+
+				timerId = setTimeout('cronometro()', 1000);
+			}
 		</script>
 
 	</head>
@@ -51,50 +76,62 @@
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
 				<div class="form-group sair">
-					<button type="button" class="btn btn-info pull-right" id="btn_sair" >Sair</button>
+					<button type="button" class="btn btn-info pull-right" id="btn_sair">Sair</button>
 				</div>
 			</div>
 		</nav>
 
 	    <div class="container">
 
-			<% if(msg == 'A' ) { %>
-				<div class="alert alert-danger" id="msg">
-					<strong>Atenção!</strong>
-					<span>Verifique se todos os campos foram informados.</span>
-				</div>
-			<% } %>
-			<% if(msg == 'B' ) { %>
-				<div class="alert alert-info" id="msg">
-					<strong>Ação realizado com sucesso!</strong>
-				</div>
-			<% } %>
+	    	<% if(msg == 'A') {%>
+	    		<div class="alert alert-danger" id="msg">
+	    			<strong>Operação inválida, verifique se todos os campos foram informados!</strong>
+	    		</div>
+	    	<% } %>
+
+	    	<% if(msg == 'B') {%>
+	    		<div class="alert alert-info" id="msg">
+	    			<strong>Ação realizada com sucesso!</strong>
+	    		</div>
+	    	<% } %>
+
+	    	<% if(msg == 'C') {%>
+	    		<div class="alert alert-info" id="msg">
+	    			<strong>Senhor, a atividade ordenada foi finalizada!</strong>
+	    		</div>
+	    	<% } %>
+
+	    	<% if(msg == 'D') {%>
+	    		<div class="alert alert-info" id="msg">
+	    			<strong>Senhor, sua ordem foi revogada!</strong>
+	    		</div>
+	    	<% } %>
 	    	
 			<div class="row">
 	    		<div class="col-sm-3 casa">
-					<img src="images/casa_<%= img_casa %>.jpg" />
+					<img src="images/casa_<%=img_casa%>.jpg" />
 				</div>
 
 	    		<div class="col-sm-9">
 					<div class="row barra-superior">
 						<div class="col-sm-2"> 
 							<img src="images/habilidades/temor.jpg" title="Temor" alt="Temor" />
-							<span><%= jogo.temor %></span>
+							<span><%=jogo.temor%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
 							<img src="images/habilidades/sabedoria.jpg" title="Sabedoria" alt="Sabedoria"/>
-							<span><%= jogo.sabedoria %></span>
+							<span><%=jogo.sabedoria%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
 							<img src="images/habilidades/comercio.jpg" title="Comércio" alt="Comércio"/>
-							<span><%= jogo.comercio %></span>
+							<span><%=jogo.comercio%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
 							<img src="images/habilidades/magia.jpg" title="Magia" alt="Magia"/>
-							<span><%= jogo.magia%></span>
+							<span><%=jogo.magia%></span>
 						</div>
 					</div>
 				</div>
@@ -114,19 +151,19 @@
 			
 				<div class="row">
 					<div class="col-sm-1">
-						<img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id="btn_suditos" />
-						<span><%= jogo.suditos%></span>
+						<img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id="btn_suditos"/>
+						<span><%=jogo.suditos%></span>
 					</div>
 					
 					<div class="col-sm-1">
-						<img src="images/outros/pergaminho.jpg" title="Pergaminhos" alt="Pergaminhos" id="btn_pergaminhos"/>
+						<img src="images/outros/pergaminho.jpg" title="Pergaminhos" alt="Pergaminhos" id="btn_pergaminho"/>
 					</div>
 					
 					<div class="col-sm-8"></div>
 					
 					<div class="col-sm-2">
 						<img src="images/outros/moeda.jpg" title="Moeda" alt="Moeda"/>
-						<span><%= jogo.moeda%></span>
+						<span><%=jogo.moeda%></span>
 					</div>
 					
 				</div>
