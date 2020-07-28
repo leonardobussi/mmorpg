@@ -48,9 +48,9 @@ module.exports.pergaminhos = function(application, req, res){
 
 	var usuario = req.session.usuario
 
-	JogoDAO.getAcoes(usuario)
+	JogoDAO.getAcoes(usuario, res)
 
-	res.render("pergaminhos")
+	
 }
 
 
